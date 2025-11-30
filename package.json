@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.2",
+    "cors": "^2.8.5",
     "mongodb": "^4.1.0",
     "mongoose": "^5.11.2",
     "mongoose-aggregate-paginate-v2": "^1.1.4",

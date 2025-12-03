@@ -49,6 +49,16 @@ const prefix = '/api';
 app.route(prefix + '/assignments')
   .get(assignment.getAssignments);
 
+// À SUPPRIMER après utilisation !
+app.delete('/api/assignments/deleteAll', (req, res) => {
+  Assignment.deleteMany({})
+    .then(result => res.json({ message: `${result.deletedCount} documents supprimés` }))
+    .catch(err => res.status(500).json({ error: err.message }));
+});
+
+
+
+
 app.route(prefix + '/assignments/:id')
   .get(assignment.getAssignment)
   .delete(assignment.deleteAssignment);

@@ -50,19 +50,6 @@ app.route(prefix + '/assignments')
   .get(assignment.getAssignments);
 
 
-// AJOUTEZ CETTE ROUTE ICI - AVANT /:id
-app.delete(prefix + '/assignments/deleteAll', (req, res) => {
-  const Assignment = require('./model/assignment');
-  Assignment.deleteMany({})
-    .then(result => res.json({ 
-      message: `${result.deletedCount} documents supprimés`, 
-      deletedCount: result.deletedCount 
-    }))
-    .catch(err => res.status(500).json({ error: err.message }));
-});
-
-
-
 app.route(prefix + '/assignments/:id')
   .get(assignment.getAssignment)
   .delete(assignment.deleteAssignment);

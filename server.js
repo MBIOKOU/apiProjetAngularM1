@@ -49,13 +49,17 @@ const prefix = '/api';
 app.route(prefix + '/assignments')
   .get(assignment.getAssignments);
 
-// À SUPPRIMER après utilisation !
-app.delete('/api/assignments/deleteAll', (req, res) => {
+
+// AJOUTEZ CETTE ROUTE ICI - AVANT /:id
+app.delete(prefix + '/assignments/deleteAll', (req, res) => {
+  const Assignment = require('./model/assignment');
   Assignment.deleteMany({})
-    .then(result => res.json({ message: `${result.deletedCount} documents supprimés` }))
+    .then(result => res.json({ 
+      message: `${result.deletedCount} documents supprimés`, 
+      deletedCount: result.deletedCount 
+    }))
     .catch(err => res.status(500).json({ error: err.message }));
 });
-
 
 
 

@@ -6,6 +6,15 @@ function getAssignments(req, res){
    if (req.query.rendu !== undefined) {
        filter.rendu = req.query.rendu === 'true';
    }
+   
+   if (req.query.enRetard === 'true') {
+       const today = new Date();
+       today.setHours(0, 0, 0, 0);
+       filter.rendu = false;
+       filter.dateDeRendu = { $lt: today };
+   }
+
+   
    var aggregateQuery = Assignment.aggregate();
 
    if (Object.keys(filter).length > 0) {

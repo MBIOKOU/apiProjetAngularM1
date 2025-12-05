@@ -3,18 +3,30 @@ let Assignment = require('../model/assignment');
 // Récupérer tous les assignments (GET)
 function getAssignments(req, res){
    let filter = {};
-   if (req.query.rendu !== undefined) {
-       filter.rendu = req.query.rendu === 'true';
+   const today = new Date();
+   today.setHours(0, 0, 0, 0);
+   
+   
+   if (req.query.rendu === 'true') {
+       filter.rendu = true;
+   }
+   
+   
+   else if (req.query.rendu === 'false') {
+       filter.rendu = false;
+       filter.dateDeRendu = { $gte: today }; 
+   }
+   
+   else if (req.query.enRetard === 'true') {
+       filter.rendu = false;
+       filter.dateDeRendu = { $lt: today }; // Date < aujourd'hui
    }
    
    if (req.query.enRetard === 'true') {
-       const today = new Date();
-       today.setHours(0, 0, 0, 0);
        filter.rendu = false;
        filter.dateDeRendu = { $lt: today };
    }
 
-   
    var aggregateQuery = Assignment.aggregate();
 
    if (Object.keys(filter).length > 0) {
